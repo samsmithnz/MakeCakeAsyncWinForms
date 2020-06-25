@@ -1,12 +1,5 @@
-﻿using MakeCakeAsync;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MakeCake.WinForms
@@ -15,6 +8,8 @@ namespace MakeCake.WinForms
     {
         SyncCake Cake1;
         int syncCount;
+        AsyncCake Cake2;
+        int asyncCount;
 
         public frmMain()
         {
@@ -28,9 +23,12 @@ namespace MakeCake.WinForms
             txtAsync.Text = "";
             Cake1 = new SyncCake();
             syncCount = 0;
+            Cake2 = new AsyncCake();
+            asyncCount = 0;
 
             //MakeCakeAsync.AsyncCake makeCake = new MakeCakeAsync.AsyncCake();
 
+            //Prepare the sync worker
             BackgroundWorker syncWorker = new BackgroundWorker
             {
                 WorkerReportsProgress = true
@@ -39,6 +37,7 @@ namespace MakeCake.WinForms
             syncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(syncWorker_RunWorkerCompleted);
             syncWorker.ProgressChanged += new ProgressChangedEventHandler(syncWorker_ProgressChanged);
 
+            //Prepare the async working
             BackgroundWorker asyncWorker = new BackgroundWorker
             {
                 WorkerReportsProgress = true
@@ -47,7 +46,7 @@ namespace MakeCake.WinForms
             asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(asyncWorker_RunWorkerCompleted);
             asyncWorker.ProgressChanged += new ProgressChangedEventHandler(asyncWorker_ProgressChanged);
 
-
+            //Run the tasks!
             if (syncWorker.IsBusy == false && asyncWorker.IsBusy == false)
             {
                 syncWorker.RunWorkerAsync();
@@ -55,12 +54,14 @@ namespace MakeCake.WinForms
             }
         }
 
+
         // This event handler is where the time-consuming work is done.
         private void syncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            int totalItems = 21;
 
-            for (int i = 1; i <= 20; i++)
+            for (int i = 1; i <= totalItems; i++)
             {
                 syncCount = i;
                 if (worker.CancellationPending == true)
@@ -70,8 +71,8 @@ namespace MakeCake.WinForms
                 }
                 else
                 {
+                    worker.ReportProgress((int)Math.Round((double)(100 * i) / totalItems));
                     Cake1.MakeCake(i);
-                    worker.ReportProgress((int)Math.Round((double)(100 * i) / 20));
                     //// Perform a time consuming operation and report progress.
                     //System.Threading.Thread.Sleep(500);
                     //worker.ReportProgress(i * 10);
@@ -108,7 +109,7 @@ namespace MakeCake.WinForms
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 21; i++)
             {
                 if (worker.CancellationPending == true)
                 {
@@ -117,9 +118,11 @@ namespace MakeCake.WinForms
                 }
                 else
                 {
-                    // Perform a time consuming operation and report progress.
-                    System.Threading.Thread.Sleep(500);
-                    worker.ReportProgress(i * 10);
+                    Cake2.MakeCakeAsync(i);
+                    worker.ReportProgress((int)Math.Round((double)(100 * i) / 20));
+                    //// Perform a time consuming operation and report progress.
+                    //System.Threading.Thread.Sleep(500);
+                    //worker.ReportProgress(i * 10);
                 }
             }
         }
@@ -128,6 +131,7 @@ namespace MakeCake.WinForms
         private void asyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblAsync.Text = (e.ProgressPercentage.ToString() + "%");
+            txtAsync.Text = txtAsync.Text + asyncCount.ToString() + ". " + Cake1.CurrentStatus + Environment.NewLine;
         }
 
         // This event handler deals with the results of the background operation.

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace MakeCakeAsync
+namespace MakeCake.WinForms
 {
     public class AsyncCake
     {
@@ -16,7 +12,7 @@ namespace MakeCakeAsync
 
         public async Task MakeCakeAsync(int task)
         {
-            CurrentStatus = "task " + task;
+            //CurrentStatus = "task " + task;
             switch (task)
             {
                 case int n when (n >= 1 && n <= 2):
@@ -57,12 +53,12 @@ namespace MakeCakeAsync
             if (task == 1)
             {
                 CurrentStatus = ("Preheating oven...");
-                await Task.Delay(2500);
+                await Task.Delay(1000);
             }
             else if (task == 2)
             {
                 CurrentStatus = ("Oven is ready!");
-                await Task.Delay(250);
+                await Task.Delay(1000);
             }
             else
             {
@@ -76,27 +72,27 @@ namespace MakeCakeAsync
             if (task == 3)
             {
                 CurrentStatus = ("Added cake mix");
-                await Task.Delay(500);
+                await Task.Delay(1000);
             }
             else if (task == 4)
             {
                 CurrentStatus = ("Added milk");
-                await Task.Delay(500);
+                await Task.Delay(1000);
             }
             else if (task == 5)
             {
                 CurrentStatus = ("Added vegetable oil");
-                await Task.Delay(500);
+                await Task.Delay(1000);
             }
             else if (task == 6)
             {
                 CurrentStatus = ("Added eggs");
-                await Task.Delay(500);
+                await Task.Delay(1000);
             }
             else if (task == 7)
             {
                 CurrentStatus = ("Cake ingredients mixed!");
-                await Task.Delay(250);
+                await Task.Delay(1000);
             }
             else
             {
@@ -111,12 +107,12 @@ namespace MakeCakeAsync
                 if (task == 8)
                 {
                     CurrentStatus = ("Baking cake...");
-                    await Task.Delay(5000);
+                    await Task.Delay(1000);
                 }
                 else if (task == 9)
                 {
                     CurrentStatus = ("Cake is done baking!");
-                    await Task.Delay(250);
+                    await Task.Delay(1000);
                 }
                 else
                 {
@@ -129,13 +125,13 @@ namespace MakeCakeAsync
 
         private async Task AddFrostingIngredients()
         {
-            await Task.Delay(500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Added cream cheese");
-            await Task.Delay(500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Added milk");
-            await Task.Delay(500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Added vegetable oil");
-            await Task.Delay(500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Added eggs");
 
             Common.WriteToConsole("Frosting ingredients mixed!");
@@ -144,7 +140,7 @@ namespace MakeCakeAsync
         private async Task<bool> CoolFrostingAsync()
         {
             Common.WriteToConsole("Cooling frosting...");
-            await Task.Delay(2500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Frosting is cooled!");
             return true;
         }
@@ -154,7 +150,7 @@ namespace MakeCakeAsync
             if (isBaked)
             {
                 Common.WriteToConsole("Cooling cake...");
-                await Task.Delay(2500);
+                await Task.Delay(1000);
                 Common.WriteToConsole("Cake is cooled!");
                 return true;
             }
@@ -173,11 +169,11 @@ namespace MakeCakeAsync
 
         private async Task PassTheTime()
         {
-            await Task.Delay(500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Watched TV");
-            await Task.Delay(500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Ate lunch");
-            await Task.Delay(500);
+            await Task.Delay(1000);
             Common.WriteToConsole("Cleaned the kitchen");
         }
     }
