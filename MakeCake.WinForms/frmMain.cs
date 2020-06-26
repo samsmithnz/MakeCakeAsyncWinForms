@@ -6,11 +6,13 @@ namespace MakeCake.WinForms
 {
     public partial class frmMain : Form
     {
-        DateTime startTime;
-        SyncCake Cake1;
-        int syncCount;
-        AsyncCake Cake2;
-        int asyncCount;
+        private DateTime startTime;
+        private int totalItems = 9;
+        private SyncCake Cake1;
+        private int syncCount;
+        private AsyncCake Cake2;
+        private int asyncCount;
+
 
         public frmMain()
         {
@@ -61,7 +63,6 @@ namespace MakeCake.WinForms
         private void syncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-            int totalItems = 21;
 
             for (int i = 1; i <= totalItems; i++)
             {
@@ -86,8 +87,8 @@ namespace MakeCake.WinForms
         private void syncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblSync.Text = (e.ProgressPercentage.ToString() + "%");
-            txtSync.Text += syncCount.ToString() + "/21. " + Cake1.CurrentStatus + ", " + DateTime.Now.ToString("hh:mm:sstt");
-            if (syncCount < 21)
+            txtSync.Text += syncCount.ToString() + "/" + totalItems.ToString() + ". " + Cake1.CurrentStatus + ", " + DateTime.Now.ToString("hh:mm:sstt");
+            if (syncCount < totalItems)
             {
                 txtSync.Text += Environment.NewLine;
             }
@@ -116,7 +117,7 @@ namespace MakeCake.WinForms
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            for (int i = 1; i <= 21; i++)
+            for (int i = 1; i <= totalItems; i++)
             {
                 if (worker.CancellationPending == true)
                 {
@@ -126,7 +127,7 @@ namespace MakeCake.WinForms
                 else
                 {
                     Cake2.MakeCakeAsync(i);
-                    worker.ReportProgress((int)Math.Round((double)(100 * i) / 20));
+                    worker.ReportProgress((int)Math.Round((double)(100 * i) / totalItems));
                     //// Perform a time consuming operation and report progress.
                     //System.Threading.Thread.Sleep(500);
                     //worker.ReportProgress(i * 10);
@@ -138,8 +139,8 @@ namespace MakeCake.WinForms
         private void asyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblAsync.Text = (e.ProgressPercentage.ToString() + "%");
-            txtAsync.Text += asyncCount.ToString() + "/21. " + Cake2.CurrentStatus + ", " + DateTime.Now.ToString("hh:mm:sstt");
-            if (asyncCount < 21)
+            txtAsync.Text += asyncCount.ToString() + "/" + totalItems.ToString() + ". " + Cake2.CurrentStatus + ", " + DateTime.Now.ToString("hh:mm:sstt");
+            if (asyncCount < totalItems)
             {
                 txtAsync.Text += Environment.NewLine;
             }
