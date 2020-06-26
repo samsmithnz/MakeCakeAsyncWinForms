@@ -6,6 +6,7 @@ namespace MakeCake.WinForms
 {
     public partial class frmMain : Form
     {
+        DateTime startTime;
         SyncCake Cake1;
         int syncCount;
         AsyncCake Cake2;
@@ -21,6 +22,7 @@ namespace MakeCake.WinForms
         {
             txtSync.Text = "";
             txtAsync.Text = "";
+            startTime = DateTime.Now;
             Cake1 = new SyncCake();
             syncCount = 0;
             Cake2 = new AsyncCake();
@@ -84,7 +86,11 @@ namespace MakeCake.WinForms
         private void syncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblSync.Text = (e.ProgressPercentage.ToString() + "%");
-            txtSync.Text = txtSync.Text + syncCount.ToString() + ". " + Cake1.CurrentStatus + Environment.NewLine;
+            txtSync.Text += syncCount.ToString() + "/21. " + Cake1.CurrentStatus + ", " + DateTime.Now.ToString("hh:mm:sstt");
+            if (syncCount < 21)
+            {
+                txtSync.Text += Environment.NewLine;
+            }
         }
 
         // This event handler deals with the results of the background operation.
@@ -100,7 +106,8 @@ namespace MakeCake.WinForms
             }
             else
             {
-                lblSync.Text = "Done!";
+                TimeSpan timespan = (DateTime.Now - startTime);
+                lblSync.Text = "Done in " + timespan.TotalHours.ToString("00") + ":" + timespan.TotalMinutes.ToString("00") + ":" + timespan.TotalSeconds.ToString("00");
             }
         }
 
@@ -131,7 +138,11 @@ namespace MakeCake.WinForms
         private void asyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblAsync.Text = (e.ProgressPercentage.ToString() + "%");
-            txtAsync.Text = txtAsync.Text + asyncCount.ToString() + ". " + Cake1.CurrentStatus + Environment.NewLine;
+            txtAsync.Text += asyncCount.ToString() + "/21. " + Cake2.CurrentStatus + ", " + DateTime.Now.ToString("hh:mm:sstt");
+            if (asyncCount < 21)
+            {
+                txtAsync.Text += Environment.NewLine;
+            }
         }
 
         // This event handler deals with the results of the background operation.
@@ -147,7 +158,9 @@ namespace MakeCake.WinForms
             }
             else
             {
-                lblAsync.Text = "Done!";
+                TimeSpan timespan = (DateTime.Now - startTime);
+                lblAsync.Text = "Done in " + timespan.TotalHours.ToString("00") + ":" + timespan.TotalMinutes.ToString("00") + ":" + timespan.TotalSeconds.ToString("00");
+
             }
         }
     }

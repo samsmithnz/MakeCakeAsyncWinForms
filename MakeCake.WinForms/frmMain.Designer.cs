@@ -57,7 +57,7 @@
             // lblAsync
             // 
             this.lblAsync.AutoSize = true;
-            this.lblAsync.Location = new System.Drawing.Point(459, 66);
+            this.lblAsync.Location = new System.Drawing.Point(845, 67);
             this.lblAsync.Name = "lblAsync";
             this.lblAsync.Size = new System.Drawing.Size(76, 32);
             this.lblAsync.TabIndex = 2;
@@ -70,7 +70,7 @@
             this.txtSync.Location = new System.Drawing.Point(13, 102);
             this.txtSync.Multiline = true;
             this.txtSync.Name = "txtSync";
-            this.txtSync.Size = new System.Drawing.Size(420, 684);
+            this.txtSync.Size = new System.Drawing.Size(826, 997);
             this.txtSync.TabIndex = 3;
             // 
             // txtAsync
@@ -78,15 +78,15 @@
             this.txtAsync.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAsync.Location = new System.Drawing.Point(459, 102);
+            this.txtAsync.Location = new System.Drawing.Point(845, 102);
             this.txtAsync.Multiline = true;
             this.txtAsync.Name = "txtAsync";
-            this.txtAsync.Size = new System.Drawing.Size(420, 684);
+            this.txtAsync.Size = new System.Drawing.Size(929, 997);
             this.txtAsync.TabIndex = 3;
             // 
             // frmMain
             // 
-            this.ClientSize = new System.Drawing.Size(891, 798);
+            this.ClientSize = new System.Drawing.Size(1786, 1111);
             this.Controls.Add(this.txtAsync);
             this.Controls.Add(this.txtSync);
             this.Controls.Add(this.lblAsync);
